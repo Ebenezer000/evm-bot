@@ -42,7 +42,7 @@ export default function Home() {
       <Meta />
 
       <div className="w-full flex flex-col">
-        <form className="w-[30%] mx-auto p-4 rounded shadow-md" onSubmit={handleSubmit}>
+        <form className="md:w-[30%] mx:w-[50%] mx-auto p-4 rounded shadow-md" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-white-700 text-sm font-bold mb-2" htmlFor="tokenName">
               Token Name
