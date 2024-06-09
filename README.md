@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# Template for dApp built in Next.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Template for a decentralized application (dApp) built in [Next](https://nextjs.org).
+
+- [TypeScript](https://www.typescriptlang.org)
+- [Next 14](https://nextjs.org/blog/next-14)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Sass](https://sass-lang.com)
+- [Tailwind CSS](https://tailwindcss.com)
+
+### Web3 Packages
+
+- [ethers](https://docs.ethers.org/v5/)
+- [rainbowkit](https://www.rainbowkit.com)
+- [wagmi](https://wagmi.sh)
+
+---
 
 ## Available Scripts
 
-In the project directory, you can run:
+### Development Mode
 
-### `npm start`
+#### Start the Development Server
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+These commands start the application in development mode. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result. The page auto-updates as you edit the file.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
 
-### `npm test`
+### Production Build
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Build the App for Production
 
-### `npm run build`
+These commands build an optimized version of the application for production, saved in the `.next` folder.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Production Server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Start the Production Server
 
-### `npm run eject`
+After building the application, use these commands to start the server in production mode.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+npm run start
+# or
+yarn start
+# or
+pnpm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Code Quality
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Run the Linter
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Run these commands to start the linter, which helps maintain code quality and find any issues.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run lint
+# or
+yarn lint
+# or
+pnpm lint
+```
