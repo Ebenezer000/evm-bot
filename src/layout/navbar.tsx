@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-//Importing Next
+// Importing Next
 import Image from "next/image";
 import Link from "next/link";
-//Importing RainbowKit
+// Importing RainbowKit
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ThemeSwitch from '../components/ThemeSwitch/index';
 
@@ -25,10 +25,8 @@ export default function NavBar() {
 
   return (
     <header className="px-4 xs:px-6 md:px-8 bg-02 shadow-lg dark:bg-09">
-      <nav className="flex flex-wrap items-center justify-between mx-auto">
-        <Link href="/" target="_self" className="py-4 pr-4">
-          <Image src="/img/logo.png" alt="logo" width={60} height={60} />
-        </Link>
+      <nav className="flex items-center justify-between mx-auto py-5">
+
         <div className="contents justify-self-end py-5 px-8 h-8 cursor-pointer md:hidden">
           <div
             onClick={toggleNav}
@@ -41,16 +39,13 @@ export default function NavBar() {
             <span className="line"></span>
           </div>
         </div>
-
-        <div
-          className={`w-full md:block md:max-w-header-nav ${
+        <div className={` md:block md:max-w-header-nav ${
             isNavVisible ? "block" : "hidden"
-          }`}
-        >
-          <ul className="p-0 mt-0 mb-6 flex flex-col w-full md:m-0 md:flex-row md:justify-around">
+          }`}>
+          <ul className="p-0 mt-0 mb-0 flex flex-col w-full md:m-0 md:flex-row md:items-center md:justify-between">
             <li className="flex items-center justify-center">
               <a
-                className="block px- py-2 text-black text-lg font-medium dark:text-white"
+                className="block py-2 px-2 text-black text-lg font-medium dark:text-white"
                 href="/"
                 rel="noreferrer"
               >
@@ -59,7 +54,16 @@ export default function NavBar() {
             </li>
             <li className="flex items-center justify-center">
               <a
-                className="block px- py-2 text-black text-lg font-medium dark:text-white"
+                className="block py-2 px-2 text-black text-lg font-medium dark:text-white"
+                href="/distribute"
+                rel="noreferrer"
+              >
+                Distribute Token
+              </a>
+            </li>
+            <li className="flex items-center justify-center">
+              <a
+                className="block py-2 px-2 text-black text-lg font-medium dark:text-white"
                 href="/liquidity"
                 rel="noreferrer"
               >
@@ -68,20 +72,24 @@ export default function NavBar() {
             </li>
             <li className="flex items-center justify-center">
               <a
-                className="block px- py-2 text-black text-lg font-medium dark:text-white"
+                className="block py-2 px-2 text-black text-lg font-medium dark:text-white"
                 href="/bot"
                 rel="noreferrer"
               >
                 Start Bot
               </a>
             </li>
-            <li className="flex items-center justify-center">
-              <ThemeSwitch />
-            </li>
-            <li className="flex pt-2 md:pt-0 items-center justify-center">
-              <ConnectButton />
-            </li>
           </ul>
+        </div>
+
+        <div
+          className={`flex flex-col md:block md:max-w-header-nav ${
+            isNavVisible ? "block" : "hidden"
+          }`}
+        >
+            <div className="block items-center justify-center">
+              <ConnectButton />
+          </div>
         </div>
       </nav>
     </header>

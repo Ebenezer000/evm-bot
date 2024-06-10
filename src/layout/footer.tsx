@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 //Importing icon
 import { IoLogoGithub, IoFlash, IoPlanet } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
+import ThemeSwitch from "@/components/ThemeSwitch";
 
 export default function Footer() {
   const [mounted, setMounted] = useState(false);
@@ -16,17 +17,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-02 sm:flex sm:items-center sm:justify-between p-4 sm:p-6 xl:p-8 dark:bg-09">
-      <p className="mb-4 text-sm text-center text-gray-500 dark:text-gray-300 sm:mb-0">
-        &copy; {new Date().getFullYear()}{" "}
-        <a
-          className="hover:underline"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Liquidity Controller
-        </a>
-        . All rights reserved.
-      </p>
+      <ThemeSwitch />
       <div className="flex justify-center items-center space-x-1">
         {/* Bitcoin Lightning */}
         <a

@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "Liquidity Controller",
+    "short_name": "Volume Bot",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

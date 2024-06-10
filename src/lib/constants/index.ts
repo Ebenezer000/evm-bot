@@ -10,5 +10,5 @@ export const metadata = {
   type: "website",
   url: "next-dapp-matteocelani.vercel.app",
   image: "next-dapp-matteocelani.vercel.app/img/logo.png",
-  autor: "Matteo Celani",
+  autor: "Ma",
 };

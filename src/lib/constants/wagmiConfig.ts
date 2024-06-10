@@ -112,12 +112,13 @@ export const wagmiConfig = getDefaultConfig({
   wallets: wallets,
   chains: [
     mainnet,
+    bsc,
     polygon,
     optimism,
     arbitrum,
     base,
-    bsc,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [sepolia, bscTestnet, blastSepolia, blast, polygonMumbai,] : []),
+    blast,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === "true" ? [bscTestnet, polygonMumbai] : []),
   ],
   transports: {
     [mainnet.id]: http(),

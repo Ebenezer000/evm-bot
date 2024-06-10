@@ -28,9 +28,9 @@ export default function ThemeSwitch() {
     >
       <div className="rounded-full p-2 shadow-lg bg-gray-800 dark:bg-gray-200">
         {resolvedTheme === "dark" ? (
-          <HiMoon className="h-6 w-6 text-black" />
+          <HiMoon className="h-5 w-5 text-black" />
         ) : (
-          <HiSun className="h-6 w-6 text-white" />
+          <HiSun className="h-5 w-5 text-white" />
         )}
       </div>
     </button>
