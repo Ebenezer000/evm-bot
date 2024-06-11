@@ -1,96 +1,86 @@
-import React, { Fragment, useEffect, useState } from "react";
-//Importing Hooks
-import { useAccount } from "wagmi";
-//Importing Components
-import Meta from "@/components/Meta";
-import ThemeSwitch from "@/components/ThemeSwitch";
+// pages/index.tsx
+import { useState } from 'react';
+import { Token } from '@uniswap/sdk-core';
+import { useAccount, useConnect } from 'wagmi';
+import { useUniswap } from '../hooks/useUniswap';
 
-export default function Home() {
+const Home = () => {
   const { address, isConnected } = useAccount();
+  const { createLiquidityAndSwap, error, txHash } = useUniswap();
 
-  useEffect(() => {
-    if (isConnected) {
-      console.log("Wallet address: ", address);
-    } else {
-      console.log("Not connected");
-    }
-  }, [address, isConnected]);
+  const [tokenAAddress, setTokenAAddress] = useState('');
+  const [tokenBAddress, setTokenBAddress] = useState('');
+  const [amountA, setAmountA] = useState('');
+  const [amountB, setAmountB] = useState('');
+  const [fee, setFee] = useState(3000);
 
-  const [formData, setFormData] = useState({
-    tokenAddress: '',
-    tokenAmount: '',
-    baseAmount: '',
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Add your form submission logic here
-  };
-  
-  return (
-    <Fragment>
-      <Meta />
 
-      <div className="w-full flex flex-col">
-        <form className="md:w-[30%] mx:w-[50%] mx-auto p-4 rounded shadow-md" onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tokenAddress">
-              Token Name
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="tokenAddress"
-              type="text"
-              name="tokenAddress"
-              value={formData.tokenAddress}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tokenAmount">
-              Token Symbol
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="tokenAmount"
-              type="text"
-              name="tokenAmount"
-              value={formData.tokenAmount}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="baseAmount">
-              Decimal
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="baseAmount"
-              type="text"
-              name="baseAmount"
-              value={formData.baseAmount}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <button
-              className="bg-[#FF801F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:-outline"
-              type="submit"
-            >
-              Submit
+    const tokenA = new Token(1, tokenAAddress, 18, 'TOKENA', 'Token A');
+    const tokenB = new Token(1, tokenBAddress, 18, 'TOKENB', 'Token B');
+
+    await createLiquidityAndSwap(tokenA, tokenB, amountA, amountB, fee);
+  };
+
+  return (
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold mb-4">Uniswap V3 Liquidity and Swap</h1>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block">Token A Address:</label>
+              <input
+                type="text"
+                value={tokenAAddress}
+                onChange={(e) => setTokenAAddress(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
+            <div>
+              <label className="block">Token B Address:</label>
+              <input
+                type="text"
+                value={tokenBAddress}
+                onChange={(e) => setTokenBAddress(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
+            <div>
+              <label className="block">Amount A:</label>
+              <input
+                type="text"
+                value={amountA}
+                onChange={(e) => setAmountA(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
+            <div>
+              <label className="block">Amount B:</label>
+              <input
+                type="text"
+                value={amountB}
+                onChange={(e) => setAmountB(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </div>
+            <div>
+              <label className="block">Fee:</label>
+              <input
+                type="number"
+                value={fee}
+                onChange={(e) => setFee(Number(e.target.value))}
+                className="border p-2 w-full"
+              />
+            </div>
+            <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded">
+              Create Liquidity and Swap
             </button>
-          </div>
-        </form>
+            {error && <p className="text-red-500 mt-2">{error}</p>}
+            {txHash && <p className="text-green-500 mt-2">Transaction Hash: {txHash}</p>}
+          </form>
       </div>
-    </Fragment>
   );
-}
+};
+
+export default Home;

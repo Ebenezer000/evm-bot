@@ -18,8 +18,9 @@ export default function Home() {
 
   const [formData, setFormData] = useState({
     tokenAddress: '',
-    tokenAmount: '',
-    baseAmount: '',
+    tokenAmount: 0,
+    baseAmount: 0,
+    snipePercent: 0,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -57,14 +58,40 @@ export default function Home() {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="tokenAmount">
-              List Of Addresses
+              Token Amount
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="tokenAmount"
-              type="text"
+              type="number"
               name="tokenAmount"
               value={formData.tokenAmount}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="baseAmount">
+              Eth Amount
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="baseAmount"
+              type="number"
+              name="baseAmount"
+              value={formData.baseAmount}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="snipePercent">
+              Snipe Percent
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="snipePercent"
+              type="number"
+              name="snipePercent"
+              value={formData.snipePercent}
               onChange={handleChange}
             />
           </div>
@@ -73,7 +100,7 @@ export default function Home() {
               className="bg-[#FF801F] text-white font-bold py-2 px-4 rounded focus:outline-none focus:-outline"
               type="submit"
             >
-              Distribute
+              Submit
             </button>
           </div>
         </form>

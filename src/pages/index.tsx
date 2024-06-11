@@ -1,29 +1,23 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { encodeAbiParameters } from "viem";
-import { useAccount, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount, useTransactionReceipt, useWaitForTransactionReceipt } from "wagmi";
 import Meta from "@/components/Meta";
 import { tokenBytecode } from "@/Contracts/VolBytecode";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { HiClipboardDocument, HiClipboardDocumentCheck } from "react-icons/hi2";
+import Web3 from "web3";
 
 export default function Home() {
   const { address, isConnected, connector, chain } = useAccount();
   const [transactionHash, setTransactionHash] = useState('');
+  const [contractAddress, setContractAddress] = useState('');
   const [isLoading, setIsloading] = useState(false);
-  const [isDeployed, setIsDeployed] = useState(true);
+  const [isDeployed, setIsDeployed] = useState(false);
   const [error, setError] = useState('');
-  const [explorerUrl, setExplorerUrl] = useState<string>("");
 
+  console.log(chain?.blockExplorers?.default.url)
   const [copied, SetCopied] = useState<boolean>(false)
   
-  useEffect(() => {
-    if (isConnected) {
-      console.log("Wallet address: ", address);
-    } else {
-      console.log("Not connected");
-    }
-  }, [address, isConnected]);
-
   const [formData, setFormData] = useState({
     tokenName: '',
     tokenSymbol: '',
@@ -40,13 +34,22 @@ export default function Home() {
   };
 
   // Hooks
-  const receipt = useWaitForTransactionReceipt({
-    hash: transactionHash ? `${transactionHash}` as `0x${string}` : undefined,
-  });
+  async function getReciept(){
+    const provider = await connector?.getProvider() as any;
+    const web3 = new Web3(provider)
+    const receipt = await web3.eth.getTransactionReceipt(transactionHash)
+    console.log(receipt)
+    console.log(receipt.contractAddress)
+    setContractAddress(receipt.contractAddress!)
+  }
+  
+
+
+  console.log(transactionHash)
 
 
   function copyButton() {
-    navigator.clipboard.writeText(`https://wasp-orpin.vercel.app/?ref=${address as string}`);
+    navigator.clipboard.writeText(contractAddress);
     SetCopied(true)
   }
 
@@ -89,7 +92,7 @@ export default function Home() {
       setTransactionHash(tx);
 
       // Refetch wait for receipt
-      receipt.refetch();
+      getReciept()
       setIsDeployed(true)
     } catch (error: any) {
       console.error(error?.message);
@@ -181,7 +184,7 @@ export default function Home() {
                   Copy Token Address
                 </h1>
                 <div className="text-xl font-bold">
-                  {receipt?.data?.contractAddress}
+                  {contractAddress}
                   <span>
                     <button
                       onClick={copyButton}>
@@ -194,25 +197,33 @@ export default function Home() {
                 </div>
               </div>
               <div>
-                <a
+
+                <button
+                  className="mt-4 bg-green-500 text-white py-2 px-4 mx-1 rounded focus:outline-none focus:shadow-outline"
+                >
+                  <a
                   href="/distribute"
                   >
-                  <button
-                    className="mt-4 bg-green-500 text-white font-bold py-2 px-4 mx-1 rounded focus:outline-none focus:shadow-outline"
-                  >
-                    Distribute
-                  </button>
-                </a>
+                  Distribute
+                  </a>
+                </button>
                 
                 <a
-                  href={chain?.blockExplorers+"/token/"+receipt?.data?.contractAddress}
+                  href={chain?.blockExplorers?.default.url+"/token/"+contractAddress}
+                  target="_blank"
                 >
                   <button
-                    className="mt-4 bg-green-500 text-white  py-2 px-4 mx-1 rounded focus:outline-none focus:shadow-outline"
+                    className="mt-4 bg-green-500 text-white py-2 px-4 mx-1 rounded focus:outline-none focus:shadow-outline"
                   >
                     View Token
                   </button>
                 </a>
+                {/* <button
+                className="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                onClick={() => setIsDeployed(false)}
+              >
+                Close
+              </button> */}
               </div>
             </div>
           </div>
